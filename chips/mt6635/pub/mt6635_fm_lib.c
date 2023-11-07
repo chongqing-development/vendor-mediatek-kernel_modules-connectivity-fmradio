@@ -913,7 +913,7 @@ static signed int mt6635_PowerUp(unsigned short *chip_id, unsigned short *device
 	signed int ret = 0;
 	unsigned short pkt_size;
 	unsigned short tmp_reg = 0;
-	unsigned int tem = 0;
+	unsigned int tem = 0, tmp_chip_id = 0;
 
 	if (chip_id == NULL) {
 		WCN_DBG(FM_ERR | CHIP, "%s,invalid pointer\n", __func__);
@@ -960,10 +960,9 @@ static signed int mt6635_PowerUp(unsigned short *chip_id, unsigned short *device
 		return ret;
 	}
 
-	if ((tem & 0xFFFF0000) == 0x66350000 ||
-		(tem & 0xFFFF0000) == 0x66370000) {
-		*chip_id = tem >> 16;
-		mt6635_hw_info.chip_id = (signed int) *chip_id;
+	tmp_chip_id = tem >> 16;
+	if (tmp_chip_id == 0x6635 || tmp_chip_id == 0x6637) {
+		mt6635_hw_info.chip_id = (signed int)tmp_chip_id;
 		WCN_DBG(FM_NTC | CHIP, "A-die id 0x%08x\n", tem);
 	} else {
 		WCN_DBG(FM_ALT | CHIP, "Unexpected A-die id 0x%08x\n", tem);
@@ -985,7 +984,7 @@ static signed int mt6635_PowerUp(unsigned short *chip_id, unsigned short *device
 	/* Wholechip FM Power Up: step 2, read HW version */
 	mt6635_show_reg();
 	fm_reg_read(0x62, &tmp_reg);
-	if (tmp_reg == *chip_id)
+	if (tmp_reg == tmp_chip_id)
 		*device_id = tmp_reg;
 	else {
 		mt6635_show_reg();
