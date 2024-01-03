@@ -2263,6 +2263,9 @@ static bool mt6635_SPI_hopping_check(unsigned short freq)
 {
 	signed int size;
 
+	if (mt6635_hw_info.chip_id == 0x6637)
+		return false;
+
 	size = ARRAY_SIZE(mt6635_SPI_hopping_list);
 
 	if (fm_get_channel_space(freq) == 0)
@@ -2270,9 +2273,9 @@ static bool mt6635_SPI_hopping_check(unsigned short freq)
 
 	while (size) {
 		if (mt6635_SPI_hopping_list[size - 1] == freq)
-			return 1;
+			return true;
 		size--;
 	}
 
-	return 0;
+	return false;
 }
