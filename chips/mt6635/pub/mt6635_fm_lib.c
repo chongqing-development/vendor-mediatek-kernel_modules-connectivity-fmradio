@@ -897,7 +897,7 @@ static void mt6635_show_reg(void)
 static void mt6635_copy_by_mask(unsigned char src, unsigned char dst,
 				unsigned short mask_and)
 {
-	unsigned short data_src, data_dst;
+	unsigned short data_src = 0, data_dst = 0;
 
 	fm_reg_read(src, &data_src);
 	fm_reg_read(dst, &data_dst);
