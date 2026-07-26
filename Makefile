@@ -1,6 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (c) 2021 Mediatek Inc.
 
+export FM_CHIP=mt6631_6635
+export FM_PLAT=mt6631_6635
+export CFG_FM_PLAT=mt6631_6635
+export CFG_BUILD_CONNAC2=false
+export CFG_FM_CHIP_ID=mt6631_6635
+
 $(info [fm_drv:Makefile] M = $(M))
 $(info [fm_drv:Makefile] FM_CHIP_ID = $(FM_CHIP_ID))
 $(info [fm_drv:Makefile] FM_CHIP = $(FM_CHIP))
